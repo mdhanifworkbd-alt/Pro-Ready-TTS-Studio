@@ -731,7 +731,7 @@ const App: React.FC = () => {
                     </div>
 
                     <div className="border-t border-gray-700 pt-8">
-                         <h2 className="text-2xl font-bold mb-6 text-white text-center animate-neon-glow tracking-widest">
+                         <h2 className="text-2xl font-bold mb-6 text-green-400 text-center tracking-widest">
                             সফটওয়্যার অ্যাক্টিভেশন
                         </h2>
                         <div className="text-gray-300 mb-6 text-center space-y-4">
