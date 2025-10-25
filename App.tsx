@@ -762,7 +762,7 @@ const App: React.FC = () => {
                                     <KeyIcon />
                                 </div>
                                 <input
-                                    type="text"
+                                    type="password"
                                     value={inputCode}
                                     onChange={(e) => setInputCode(e.target.value)}
                                     placeholder="_ _ _ _ _ _ _ _ _ _ _"
