@@ -22,12 +22,12 @@ const CharacterInput: React.FC<CharacterInputProps> = ({ character, index, onCha
 
   return (
     <div className="relative p-4 bg-gray-900/50 border border-gray-700 rounded-lg group transition-all duration-300 focus-within:border-cyan-500">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
         
         {/* Character Name Input */}
         <div className="relative md:col-span-1">
-          <label htmlFor={`name-${character.id}`} className="block text-sm font-medium text-gray-400 mb-1">চরিত্রের নাম</label>
-           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none mt-6">
+          <label htmlFor={`name-${character.id}`} className="block text-sm font-semibold text-gray-300 mb-2">চরিত্রের নাম</label>
+           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none mt-7">
              <UserIcon/>
            </div>
           <input
@@ -43,8 +43,8 @@ const CharacterInput: React.FC<CharacterInputProps> = ({ character, index, onCha
 
         {/* Voice Selection */}
         <div className="relative md:col-span-1">
-          <label htmlFor={`voice-${character.id}`} className="block text-sm font-medium text-gray-400 mb-1">কণ্ঠস্বর</label>
-           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none mt-6">
+          <label htmlFor={`voice-${character.id}`} className="block text-sm font-semibold text-gray-300 mb-2">কণ্ঠস্বর</label>
+           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none mt-7">
             <VoiceIcon/>
            </div>
           <select
@@ -62,8 +62,8 @@ const CharacterInput: React.FC<CharacterInputProps> = ({ character, index, onCha
 
         {/* Emotion Selection */}
         <div className="relative md:col-span-1">
-          <label htmlFor={`emotion-${character.id}`} className="block text-sm font-medium text-gray-400 mb-1">আবেগ</label>
-           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none mt-6">
+          <label htmlFor={`emotion-${character.id}`} className="block text-sm font-semibold text-gray-300 mb-2">আবেগ</label>
+           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none mt-7">
             <EmotionIcon />
            </div>
           <select
@@ -85,8 +85,8 @@ const CharacterInput: React.FC<CharacterInputProps> = ({ character, index, onCha
 
 
         {/* Dialogue Textarea */}
-        <div className="md:col-span-3">
-          <label htmlFor={`dialogue-${character.id}`} className="block text-sm font-medium text-gray-400 mb-1">সংলাপ</label>
+        <div className="md:col-span-3 mt-4">
+          <label htmlFor={`dialogue-${character.id}`} className="block text-sm font-semibold text-gray-300 mb-2">সংলাপ</label>
           <textarea
             id={`dialogue-${character.id}`}
             name="dialogue"

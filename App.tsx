@@ -1,7 +1,4 @@
 
-
-
-
 import React, { useState, useCallback, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import type { Character } from './types';
@@ -29,47 +26,6 @@ interface ActivationData {
 
 const DEVELOPER_CODES = ['62333074747', '90084853627'];
 const ACTIVATION_DURATION_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
-
-
-// --- COUNTDOWN TIMER COMPONENT ---
-const CountdownTimer: React.FC<{ expiryDate: number }> = ({ expiryDate }) => {
-    const calculateTimeLeft = useCallback(() => {
-        const difference = expiryDate - new Date().getTime();
-        let timeLeft: { days?: number, hours?: number, minutes?: number, seconds?: number } = {};
-
-        if (difference > 0) {
-            timeLeft = {
-                days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-                hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-                minutes: Math.floor((difference / 1000 / 60) % 60),
-                seconds: Math.floor((difference / 1000) % 60)
-            };
-        }
-        return timeLeft;
-    }, [expiryDate]);
-
-    const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
-
-    useEffect(() => {
-        const timer = setInterval(() => {
-            setTimeLeft(calculateTimeLeft());
-        }, 1000);
-
-        return () => clearInterval(timer);
-    }, [calculateTimeLeft]);
-
-    const timerComponents: string[] = [];
-    if (timeLeft.days) timerComponents.push(`${timeLeft.days} দিন`);
-    if (timeLeft.hours) timerComponents.push(`${timeLeft.hours} ঘন্টা`);
-    if (timeLeft.minutes) timerComponents.push(`${timeLeft.minutes} মিনিট`);
-    if (typeof timeLeft.seconds !== 'undefined') timerComponents.push(`${timeLeft.seconds} সেকেন্ড`);
-
-    return (
-        <div className="text-sm text-gray-300 bg-gray-800/50 px-4 py-2 rounded-full border border-gray-700">
-            {timerComponents.length ? `সময় বাকি: ${timerComponents.join(' ')}` : <span>মেয়াদ শেষ</span>}
-        </div>
-    );
-};
 
 
 // --- ORIGINAL TTS STUDIO COMPONENT ---
@@ -223,7 +179,7 @@ const TtsStudio: React.FC<{ onDeveloperClick: () => void; expiryDate: number | n
 
   return (
     <div className="min-h-screen bg-gray-900 text-gray-100 font-sans flex flex-col items-center p-4 sm:p-6 md:p-8 relative">
-      <main className="w-full max-w-4xl mx-auto flex flex-col gap-8 pb-28">
+      <main className="w-full max-w-4xl mx-auto flex flex-col gap-8 pb-32">
         <header className="text-center">
           <h1 className="text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-600">
             বহু-কণ্ঠস্বর টিটিএস স্টুডিও
@@ -233,7 +189,6 @@ const TtsStudio: React.FC<{ onDeveloperClick: () => void; expiryDate: number | n
           </p>
           {expiryDate && (
             <div className="mt-4 flex flex-col items-center gap-3">
-                 <CountdownTimer expiryDate={expiryDate} />
                  <button
                     title="লগআউট"
                     onClick={onLogout}
@@ -247,22 +202,22 @@ const TtsStudio: React.FC<{ onDeveloperClick: () => void; expiryDate: number | n
           )}
         </header>
 
-        <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl shadow-2xl p-6 border border-gray-700 opacity-60">
+        <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl shadow-2xl p-6 border border-gray-700">
           <h2 className="text-xl font-semibold mb-4 text-cyan-300 flex items-center gap-2">
             ধাপ ১: স্ক্রিপ্ট থেকে চরিত্র তৈরি করুন
             <span className="text-xs bg-yellow-400/20 text-yellow-300 px-2 py-0.5 rounded-full font-medium">Coming soo....</span>
           </h2>
-          <p className="text-gray-400 text-sm">
+          <p className="text-gray-500 text-sm">
             আপনার সম্পূর্ণ স্ক্রিপ্টটি এখানে পেস্ট করুন। অ্যাপটি স্বয়ংক্রিয়ভাবে চরিত্র এবং তাদের সংলাপ শনাক্ত করবে। ফরম্যাট: <code className="bg-gray-900 px-1 py-0.5 rounded">নাম: সংলাপ</code>
           </p>
         </div>
 
-        <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl shadow-2xl p-6 border border-gray-700 opacity-60">
+        <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl shadow-2xl p-6 border border-gray-700">
           <h2 className="text-xl font-semibold mb-4 text-cyan-300 flex items-center gap-2">
             ধাপ ২: স্বয়ংক্রিয়ভাবে আবেগ যোগ করুন
             <span className="text-xs bg-yellow-400/20 text-yellow-300 px-2 py-0.5 rounded-full font-medium">Coming soo....</span>
           </h2>
-          <p className="text-gray-400 text-sm">
+          <p className="text-gray-500 text-sm">
             গল্পের ক্লাইম্যাক্স এবং পরিস্থিতি অনুযায়ী প্রতিটি সংলাপের জন্য সঠিক আবেগ স্বয়ংক্রিয়ভাবে নির্ধারণ করতে জেমিনিকে ব্যবহার করুন।
           </p>
         </div>
@@ -344,7 +299,7 @@ const TtsStudio: React.FC<{ onDeveloperClick: () => void; expiryDate: number | n
           <button
             title="Developer Access"
             onClick={onDeveloperClick}
-            className="bg-gray-800/60 backdrop-blur-sm text-xl p-2 rounded-full cursor-pointer opacity-50 hover:opacity-100 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 shadow-lg"
+            className="bg-gray-800/60 backdrop-blur text-xl p-2.5 rounded-full cursor-pointer opacity-40 hover:opacity-100 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 shadow-lg"
             aria-label="Developer Access"
             >
             🛠️
@@ -650,21 +605,21 @@ const App: React.FC = () => {
                             <table className="w-full text-left">
                                 <thead>
                                     <tr className="border-b border-gray-700">
-                                        <th className="p-2">Token</th>
-                                        <th className="p-2">TXID</th>
-                                        <th className="p-2">Timestamp</th>
-                                        <th className="p-2">Status</th>
-                                        <th className="p-2">মেয়াদ</th>
+                                        <th className="p-3 font-bold text-sm text-gray-400 uppercase tracking-wider">Token</th>
+                                        <th className="p-3 font-bold text-sm text-gray-400 uppercase tracking-wider">TXID</th>
+                                        <th className="p-3 font-bold text-sm text-gray-400 uppercase tracking-wider">Timestamp</th>
+                                        <th className="p-3 font-bold text-sm text-gray-400 uppercase tracking-wider">Status</th>
+                                        <th className="p-3 font-bold text-sm text-gray-400 uppercase tracking-wider">মেয়াদ</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody className="text-gray-300">
                                     {[...tokens].reverse().map(t => (
                                         <tr key={t.token} className="border-b border-gray-800 font-mono text-sm">
-                                            <td className="p-2 text-cyan-400">{t.token}</td>
-                                            <td className="p-2">{t.txid}</td>
-                                            <td className="p-2">{new Date(t.timestamp).toLocaleString()}</td>
-                                            <td className={`p-2 font-sans font-semibold ${t.status === 'new' ? 'text-yellow-400' : 'text-green-400'}`}>{t.status.toUpperCase()}</td>
-                                            <td className="p-2 font-sans">
+                                            <td className="p-3 text-cyan-400">{t.token}</td>
+                                            <td className="p-3">{t.txid}</td>
+                                            <td className="p-3">{new Date(t.timestamp).toLocaleString()}</td>
+                                            <td className={`p-3 font-sans font-semibold ${t.status === 'new' ? 'text-yellow-400' : 'text-green-400'}`}>{t.status.toUpperCase()}</td>
+                                            <td className="p-3 font-sans">
                                                 {t.status === 'activated' && t.activationTimestamp ? (
                                                     <TokenCountdown activationTimestamp={t.activationTimestamp} />
                                                 ) : (
@@ -758,19 +713,19 @@ const App: React.FC = () => {
                 </header>
 
                 <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl shadow-2xl p-8 border border-gray-700">
-                    <div className="text-gray-300 text-left space-y-6 mb-8">
-                        <p>আপনি কি ইউটিউবার বা কন্টেন্ট ক্রিয়েটর? ভয়েস ওভার নিয়ে টেনশনে দিন শেষ! 😥 ঘন্টার পর ঘন্টা ভয়েস এডিটিং-এর ঝামেলা অথবা ভয়েস আর্টিস্ট খোঁজার দিন এখন অতীত। বাংলাদেশে এই প্রথম Hanif's Ai Power নিয়ে এলো বহু-কণ্ঠস্বর সমৃদ্ধ এক অবিশ্বাস্য টেক্সট-টু-স্পিচ (Text-to-Speech) স্টুডিও!</p>
+                    <div className="text-gray-300 text-left space-y-8 mb-8">
+                        <p className="text-gray-200">আপনি কি ইউটিউবার বা কন্টেন্ট ক্রিয়েটর? ভয়েস ওভার নিয়ে টেনশনে দিন শেষ! 😥 ঘন্টার পর ঘন্টা ভয়েস এডিটিং-এর ঝামেলা অথবা ভয়েস আর্টিস্ট খোঁজার দিন এখন অতীত। বাংলাদেশে এই প্রথম Hanif's Ai Power নিয়ে এলো বহু-কণ্ঠস্বর সমৃদ্ধ এক অবিশ্বাস্য টেক্সট-টু-স্পিচ (Text-to-Speech) স্টুডিও!</p>
                         <div>
-                            <h3 className="font-semibold text-cyan-300 mb-2 text-lg">কেন Hanif's Ai Power ব্যবহার করবেন?</h3>
-                            <ul className="list-none space-y-2 pl-2 text-gray-400">
-                                <li className="flex items-start gap-3"><span className="text-cyan-400 mt-1">✓</span><div><strong className="text-gray-200">সিনেমাটিক কার্টুন ভয়েস:</strong> কোনো রকম এডিটিং ছাড়াই আপনার কার্টুন বা অ্যানিমেশন ক্যারেক্টারকে দিন জীবন্ত কণ্ঠ।</div></li>
-                                <li className="flex items-start gap-3"><span className="text-cyan-400 mt-1">✓</span><div><strong className="text-gray-200">প্রফেশনাল ইউটিউব ভয়েস:</strong> এমন প্রফেশনাল ভয়েস জেনারেট করুন যা দিয়ে আপনার চ্যানেল ১০০% মনিটাইজেশন পাবেই! 💯</div></li>
-                                <li className="flex items-start gap-3"><span className="text-cyan-400 mt-1">✓</span><div><strong className="text-gray-200">নিউজরুমের মতো ভয়েস:</strong> খবরের চ্যানেলের মতো দুর্দান্ত ভয়েস ওভার দিয়ে তৈরি করুন আপনার নিজস্ব নিউজ পোর্টাল। 🎤</div></li>
+                            <h3 className="font-bold text-cyan-300 mb-3 text-xl">কেন Hanif's Ai Power ব্যবহার করবেন?</h3>
+                            <ul className="list-none space-y-3 pl-2 text-gray-300">
+                                <li className="flex items-start gap-3"><span className="text-cyan-400 mt-1">✓</span><div><strong className="text-gray-100">সিনেমাটিক কার্টুন ভয়েস:</strong> কোনো রকম এডিটিং ছাড়াই আপনার কার্টুন বা অ্যানিমেশন ক্যারেক্টারকে দিন জীবন্ত কণ্ঠ।</div></li>
+                                <li className="flex items-start gap-3"><span className="text-cyan-400 mt-1">✓</span><div><strong className="text-gray-100">প্রফেশনাল ইউটিউব ভয়েস:</strong> এমন প্রফেশনাল ভয়েস জেনারেট করুন যা দিয়ে আপনার চ্যানেল ১০০% মনিটাইজেশন পাবেই! 💯</div></li>
+                                <li className="flex items-start gap-3"><span className="text-cyan-400 mt-1">✓</span><div><strong className="text-gray-100">নিউজরুমের মতো ভয়েস:</strong> খবরের চ্যানেলের মতো দুর্দান্ত ভয়েস ওভার দিয়ে তৈরি করুন আপনার নিজস্ব নিউজ পোর্টাল। 🎤</div></li>
                             </ul>
                         </div>
                         <div>
-                            <h3 className="font-semibold text-yellow-300 mb-2 text-lg">সাফল্যের গ্যারান্টি! 💸</h3>
-                            <p className="text-gray-400">আপনি কি জানেন? বর্তমানে আমাদের এই AI ভয়েস ব্যবহার করে বহু কন্টেন্ট ক্রিয়েটর সফলভাবে মনিটাইজেশন পেয়ে লাখ লাখ টাকা উপার্জন করছেন!</p>
+                            <h3 className="font-bold text-yellow-300 mb-3 text-xl">সাফল্যের গ্যারান্টি! 💸</h3>
+                            <p className="text-gray-300">আপনি কি জানেন? বর্তমানে আমাদের এই AI ভয়েস ব্যবহার করে বহু কন্টেন্ট ক্রিয়েটর সফলভাবে মনিটাইজেশন পেয়ে লাখ লাখ টাকা উপার্জন করছেন!</p>
                         </div>
                         <p className="text-center font-semibold text-lg text-purple-300 pt-2">এই অবিশ্বাস্য সুযোগ আর মিস করবেন না। ইউটিউবে নিজের জায়গা করে নেওয়ার এটাই সেরা সময়! 🚀</p>
                     </div>
@@ -779,22 +734,22 @@ const App: React.FC = () => {
                          <h2 className="text-2xl font-bold mb-6 text-white text-center animate-neon-glow tracking-widest">
                             সফটওয়্যার অ্যাক্টিভেশন
                         </h2>
-                        <div className="text-gray-400 mb-6 text-sm text-center space-y-3">
-                            <p className="text-green-400 font-bold">Subscription নিতে <span className="inline-block text-lg bg-gradient-to-r from-yellow-300 via-red-500 to-purple-500 bg-clip-text text-transparent animate-gradient-flow">২৫০ টাকা</span> সেন্ড মানি করুন বিকাশে এবং ট্রান্সজেকশন আইডি Whatsapp করুন এই নাম্বারে।</p>
-                            <div className="flex items-center justify-center bg-gray-900 border border-gray-700 rounded-lg p-2 max-w-xs mx-auto">
-                                <span className="font-mono text-lg text-cyan-300 tracking-wider flex-grow text-center">01704045466</span>
+                        <div className="text-gray-300 mb-6 text-center space-y-4">
+                           <p className="text-lg">Subscription নিতে নিচের নম্বরে <strong className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-red-500 to-purple-500">২৫০ টাকা</strong> বিকাশ সেন্ড মানি করে ট্রানজেকশন আইডি সহ Whatsapp করুন।</p>
+                            <div className="flex items-center justify-center bg-gray-950 border border-cyan-700 rounded-lg p-3 my-4 max-w-sm mx-auto">
+                                <span className="font-mono text-2xl font-bold text-cyan-300 tracking-widest flex-grow text-center">01704045466</span>
                                 <button
                                     onClick={handleCopyNumber}
                                     type="button"
-                                    className={`ml-2 px-3 py-1 text-xs font-semibold rounded-md transition-colors duration-200 flex items-center justify-center ${copySuccess ? 'bg-green-600 text-white' : 'bg-cyan-600 hover:bg-cyan-700 text-white'}`}
+                                    className={`ml-4 px-3 py-1.5 text-sm font-semibold rounded-md transition-colors duration-200 flex items-center justify-center ${copySuccess ? 'bg-green-600 text-white' : 'bg-cyan-600 hover:bg-cyan-700 text-white'}`}
                                     aria-label="Copy number"
                                 >
                                     {copySuccess ? (
-                                        <span className="flex items-center gap-1">
+                                        <span className="flex items-center gap-1.5">
                                             <CheckIcon /> Copied
                                         </span>
                                     ) : (
-                                        <span className="flex items-center gap-1">
+                                        <span className="flex items-center gap-1.5">
                                             <CopyIcon /> Copy
                                         </span>
                                     )}
@@ -828,7 +783,7 @@ const App: React.FC = () => {
                 <button
                   title="Developer Access"
                   onClick={() => { setShowDeveloperLogin(true); setInputCode(''); setError(null); }}
-                  className="bg-gray-800/60 backdrop-blur-sm text-xl p-2 rounded-full cursor-pointer opacity-50 hover:opacity-100 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 shadow-lg"
+                  className="bg-gray-800/60 backdrop-blur text-xl p-2.5 rounded-full cursor-pointer opacity-40 hover:opacity-100 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 shadow-lg"
                   aria-label="Developer Access"
                   >
                   🛠️
